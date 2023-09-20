@@ -3,9 +3,11 @@ package de.szut.webshop_fa22b.supplier;
 import de.szut.webshop_fa22b.contact.ContactEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/suppliers")
+@RestController
+@RequestMapping ("/supplier")
 public class SupplierController {
 
     private final SupplierService supplierService;
@@ -15,7 +17,8 @@ public class SupplierController {
     }
 
     @PostMapping
-    public SupplierEntity createSupplier(@RequestBody AddSupplierDto dto) {
+    public String createSupplier(@RequestBody AddSupplierDto dto) {
+        System.out.println(dto);
         // convert dto to entity
         var supplierEntity = new SupplierEntity();
         supplierEntity.setName(dto.getName());
@@ -25,6 +28,7 @@ public class SupplierController {
         contact.setPostcode(dto.getPostcode());
         contact.setPhone(dto.getPhone());
         supplierEntity.setContact(contact);
-        return supplierService.createSupplier(supplierEntity);
+       supplierService.createSupplier(supplierEntity);
+       return "Supplier created";
     }
 }
